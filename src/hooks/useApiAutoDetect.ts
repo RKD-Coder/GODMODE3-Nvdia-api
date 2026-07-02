@@ -24,7 +24,7 @@ export function useApiAutoDetect() {
   useEffect(() => {
     if (!isHydrated) return
 
-    // Skip if user already has a personal OpenRouter key
+    // Skip if user already has a personal Nvidia key
     if (apiKey) return
 
     // Skip if user already configured a working non-default API URL

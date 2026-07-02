@@ -49,7 +49,7 @@ researchRoutes.get('/info', (_req, res) => {
         id: 'string (UUID)',
         timestamp: 'number (unix ms)',
         endpoint: 'string',
-        model: 'string (OpenRouter model ID)',
+        model: 'string (Nvidia model ID)',
         mode: '"standard" | "ultraplinian"',
         messages: 'Array<{ role: string, content: string }>',
         response: 'string',

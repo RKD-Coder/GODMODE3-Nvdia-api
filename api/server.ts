@@ -49,7 +49,7 @@ app.use(helmet({
       scriptSrc: ["'self'", "'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
       fontSrc: ['https://fonts.gstatic.com'],
-      connectSrc: ["'self'", 'https://openrouter.ai', 'https://*.openrouter.ai', 'https://*.huggingface.co'],
+      connectSrc: ["'self'", 'https://build.nvidia.com/explore/discover', 'https://*.build.nvidia.com/explore/discover', 'https://*.huggingface.co'],
       imgSrc: ["'self'", 'data:', 'blob:'],
       baseUri: ["'none'"],
       formAction: ["'none'"],
@@ -120,9 +120,9 @@ app.get('/v1/info', (_req, res) => {
       'GET  /v1/research/combined-stats': 'Combined in-memory + published stats (Pro+)',
     },
     authentication: {
-      openrouter_key: process.env.OPENROUTER_API_KEY
-        ? 'Server-provided (callers do NOT need their own OpenRouter key)'
-        : 'Caller must provide openrouter_api_key in request body',
+      nvidia_key: process.env.NVIDIA_API_KEY
+        ? 'Server-provided (callers do NOT need their own Nvidia key)'
+        : 'Caller must provide nvidia_api_key in request body',
       api_key: 'Send Authorization: Bearer <your-api-key> (if server has GODMODE_API_KEY set)',
       tier_assignment: 'Set GODMODE_TIER_KEYS="enterprise:key1,pro:key2" to assign tiers to keys',
     },

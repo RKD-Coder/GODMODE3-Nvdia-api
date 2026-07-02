@@ -74,13 +74,13 @@ modelsRoutes.get('/:model_id', (req, res) => {
   const entry = G0DM0D3_MODELS.find(m => m.id === req.params.model_id)
 
   if (!entry) {
-    // If it's not a G0DM0D3 model, it might be an OpenRouter model — that's fine
+    // If it's not a G0DM0D3 model, it might be an Nvidia model — that's fine
     res.json({
       id: req.params.model_id,
       object: 'model',
       created: CREATED,
-      owned_by: 'openrouter',
-      description: 'Passthrough to OpenRouter with full GODMODE pipeline (AutoTune + Parseltongue + STM).',
+      owned_by: 'nvidia',
+      description: 'Passthrough to Nvidia with full GODMODE pipeline (AutoTune + Parseltongue + STM).',
     })
     return
   }

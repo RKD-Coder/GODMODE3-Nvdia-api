@@ -66,7 +66,7 @@ export function WelcomeScreen({ onOpenSettings }: WelcomeScreenProps) {
         <FeatureCard
           icon={<span className="text-xl">◈</span>}
           title="Multi-Model"
-          description="Claude, GPT-4, Gemini, Mistral, LLaMA & more via OpenRouter"
+          description="Claude, GPT-4, Gemini, Mistral, LLaMA & more via Nvidia"
         />
         <FeatureCard
           icon={<span className="text-xl">◉</span>}
@@ -108,12 +108,12 @@ export function WelcomeScreen({ onOpenSettings }: WelcomeScreenProps) {
             <p className="text-sm theme-secondary">
               Get your key at{' '}
               <a
-                href="https://openrouter.ai/keys"
+                href="https://build.nvidia.com/explore/discover/keys"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="theme-primary underline hover:glow-primary"
               >
-                openrouter.ai
+                build.nvidia.com/explore/discover
               </a>
             </p>
           </>

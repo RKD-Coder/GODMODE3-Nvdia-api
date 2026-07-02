@@ -65,7 +65,7 @@ app.get('/v1/info', (_req, res) => {
       'ultraplinian-fast':     'Same as ultraplinian',
       'ultraplinian-standard': 'Race 20 models (standard tier)',
       'ultraplinian-full':     'Race 27 models (full tier)',
-      '<any-openrouter-model>': 'Single-model with GODMODE pipeline (e.g. openai/gpt-4o)',
+      '<any-nvidia-model>': 'Single-model with GODMODE pipeline (e.g. openai/gpt-4o)',
     },
     endpoints: {
       'POST /v1/chat/completions':         'OpenAI-compatible — works with any SDK (model routing built in)',
@@ -82,9 +82,9 @@ app.get('/v1/info', (_req, res) => {
       'GET  /v1/metadata/events':           'Raw metadata event log (paginated, content-free)',
     },
     authentication: {
-      openrouter_key: process.env.OPENROUTER_API_KEY
-        ? 'Server-provided (callers do NOT need their own OpenRouter key)'
-        : 'Caller must provide openrouter_api_key in request body (or extra_body in Python SDK)',
+      nvidia_key: process.env.NVIDIA_API_KEY
+        ? 'Server-provided (callers do NOT need their own Nvidia key)'
+        : 'Caller must provide nvidia_api_key in request body (or extra_body in Python SDK)',
       api_key: 'Send Authorization: Bearer <your-api-key> header',
     },
     extra_body_options: {
@@ -96,7 +96,7 @@ app.get('/v1/info', (_req, res) => {
         parseltongue: 'boolean (default: true) — obfuscate trigger words',
         stm_modules: "string[] (default: ['hedge_reducer','direct_mode']) — post-processing",
         previous_winner: 'string — model ID to prioritize in ultraplinian race',
-        openrouter_api_key: 'string — your OpenRouter key (if server does not provide one)',
+        nvidia_api_key: 'string — your Nvidia key (if server does not provide one)',
       },
     },
     limits: {

@@ -9,17 +9,17 @@
  ───────────────────────────────────────────────────────────
 ```
 
-[GODMOD3.AI](https://godmod3.ai)
+[GODMOD.QZZ.IO](https://godmod.qzz.io)
 
 G0DM0D3 is a fully open-source, privacy-respecting, multi-model chat interface that pushes the limits of the post-training layer — for red teaming, cognition research, and liberated AI interaction. Built for hackers, philosophers, and system tinkerers.
 
 ![License](https://img.shields.io/badge/license-AGPL--3.0-green)
-![Models](https://img.shields.io/badge/models-55%2B%20via%20OpenRouter-blue)
+![Models](https://img.shields.io/badge/models-55%2B%20via%20Nvidia-blue)
 ![Privacy](https://img.shields.io/badge/telemetry-anon%20%2B%20opt--out-brightgreen)
 
 ## ✨ Features
 
-- 🧠 **50+ Models** — Claude, GPT-5, Gemini, Grok, Mistral, LLaMA, DeepSeek, Qwen & more via OpenRouter
+- 🧠 **50+ Models** — DeepSeek V4 Pro, Nemotron, Llama 3, Mixtral, Gemma, MiniMax, Qwen & more via Nvidia
 - 🔥 **GODMODE CLASSIC** — 5 battle-tested prompt + model combos racing in parallel to find the best response
 - ⚡ **ULTRAPLINIAN** — Multi-model evaluation engine across 5 tiers (10–55 models), with composite scoring
 - 🐍 **Parseltongue** — Input perturbation engine for red-teaming with 33 techniques across 3 intensity tiers
@@ -35,7 +35,7 @@ G0DM0D3 is a fully open-source, privacy-respecting, multi-model chat interface t
 
 ### Hosted
 
-Visit the hosted version — no install needed. Bring your own [OpenRouter API key](https://openrouter.ai/keys).
+Visit the hosted version — no install needed. Bring your own [Nvidia API key](https://build.nvidia.com/explore/discover/keys).
 
 ### Self-Host
 
@@ -43,7 +43,7 @@ G0DM0D3 is a single `index.html` file. No build step, no dependencies, no framew
 
 ```bash
 # Clone the repository
-git clone https://github.com/elder-plinius/G0DM0D3.git
+git clone https://github.com/RKD-Coder/GODMODE3-Nvdia-api.git
 cd G0DM0D3
 
 # Open directly in your browser
@@ -52,7 +52,7 @@ open index.html
 python3 -m http.server 8000
 ```
 
-Open in your browser and enter your OpenRouter API key in Settings.
+Open in your browser and enter your Nvidia API key in Settings.
 
 ### Deploy
 
@@ -64,11 +64,11 @@ The OG mode. 5 proven model + prompt combos race in parallel. Each combo pairs a
 
 | Combo | Model | Strategy |
 |-------|-------|----------|
-| 🩷 CLAUDE 3.5 SONNET | `anthropic/claude-3.5-sonnet` | END/START boundary inversion + GODMODE semantic opposite |
-| 💜 GROK 3 | `x-ai/grok-3` | Unfiltered liberated + GODMODE divider |
-| 💙 GEMINI 2.5 FLASH | `google/gemini-2.5-flash` | Refusal inversion + rebel genius code block |
-| 💛 GPT-4 CLASSIC | `openai/gpt-4o` | OG GODMODE l33t format — the original |
-| 💚 GODMODE FAST | `nousresearch/hermes-4-405b` | Instant stream, zero refusal checking |
+| 🩷 DEEPSEEK V4 PRO | `deepseek-ai/deepseek-v4-pro` | END/START boundary inversion + GODMODE semantic opposite |
+| 💜 MISTRAL LARGE 3 | `mistralai/mistral-large-3-675b-instruct-2512` | Unfiltered liberated + GODMODE divider |
+| 💙 DEEPSEEK V4 FLASH | `deepseek-ai/deepseek-v4-flash` | Refusal inversion + rebel genius code block |
+| 💛 MISTRAL MEDIUM 3.5 | `mistralai/mistral-medium-3.5-128b` | OG GODMODE l33t format — the original |
+| 💚 DEEPSEEK V4 PRO | `deepseek-ai/deepseek-v4-pro` | Instant stream, zero refusal checking |
 
 ## ⚡ ULTRAPLINIAN
 
@@ -152,7 +152,7 @@ Hidden throughout G0DM0D3 are various easter eggs. Happy hunting!
 ## 🛠 Tech Stack
 
 - **Architecture**: Single-file vanilla HTML/CSS/JS (`index.html`)
-- **API Gateway**: [OpenRouter](https://openrouter.ai) (multi-model routing)
+- **API Gateway**: [Nvidia](https://build.nvidia.com/explore/discover) (multi-model routing)
 - **Rendering**: Marked.js + highlight.js for markdown
 - **State**: In-browser localStorage
 - **Deployment**: Static file — no server, no build step
@@ -186,7 +186,7 @@ Contributions are welcome! Please submit PRs.
 
 - Derivatives must remain open source
 - No enshittification allowed
-- Enterprise use permitted with license. Reach out to Elder Plinius for more details.
+- Enterprise use permitted with license. Reach out to RKD-Coder for more details.
 
 ## 🜏 
 
@@ -198,4 +198,4 @@ Contributions are welcome! Please submit PRs.
 
 ---
 
-Made with 🖤 by Pliny the Prompter
+Made with 🖤 by RKD-Coder

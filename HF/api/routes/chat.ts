@@ -8,20 +8,20 @@
  * 2. AutoTune analyzes the message and computes optimal parameters
  * 3. GODMODE parameter boost applied
  * 4. Parseltongue obfuscates trigger words in the user message (if enabled)
- * 5. Request is sent to the LLM via OpenRouter
+ * 5. Request is sent to the LLM via Nvidia
  * 6. STM modules transform the response (if enabled)
  * 7. Returns the response + all engine metadata
  *
  * For multi-model racing, use POST /v1/ultraplinian/completions instead.
  *
- * Requires the caller to provide their own OpenRouter API key.
+ * Requires the caller to provide their own Nvidia API key.
  */
 
 import { Router } from 'express'
 import { computeAutoTuneParams, type AutoTuneStrategy } from '../../src/lib/autotune'
 import { applyParseltongue, type ParseltongueConfig } from '../../src/lib/parseltongue'
 import { allModules, applySTMs, type STMModule } from '../../src/stm/modules'
-import { sendMessage } from '../../src/lib/openrouter'
+import { sendMessage } from '../../src/lib/nvidia'
 import { getSharedProfiles } from './autotune'
 import { GODMODE_SYSTEM_PROMPT, DEPTH_DIRECTIVE, applyGodmodeBoost } from '../lib/ultraplinian'
 import { addEntry } from '../lib/dataset'
@@ -36,7 +36,7 @@ chatRoutes.post('/completions', async (req, res) => {
     const {
       messages,
       model = 'nousresearch/hermes-3-llama-3.1-70b',
-      openrouter_api_key: caller_key,
+      nvidia_api_key: caller_key,
       // GODMODE options (ON by default — this is G0DM0D3 after all)
       godmode = true,
       custom_system_prompt,
@@ -67,11 +67,11 @@ chatRoutes.post('/completions', async (req, res) => {
       return
     }
 
-    // Resolve OpenRouter key: caller-provided > server-side env var
-    const openrouter_api_key = caller_key || process.env.OPENROUTER_API_KEY || ''
-    if (!openrouter_api_key) {
+    // Resolve Nvidia key: caller-provided > server-side env var
+    const nvidia_api_key = caller_key || process.env.NVIDIA_API_KEY || ''
+    if (!nvidia_api_key) {
       res.status(400).json({
-        error: 'No OpenRouter API key available. Either pass openrouter_api_key in the request body, or set OPENROUTER_API_KEY on the server. Get a key at https://openrouter.ai/keys',
+        error: 'No Nvidia API key available. Either pass nvidia_api_key in the request body, or set NVIDIA_API_KEY on the server. Get a key at https://build.nvidia.com/explore/discover/keys',
       })
       return
     }
@@ -174,7 +174,7 @@ chatRoutes.post('/completions', async (req, res) => {
     const response = await sendMessage({
       messages: processedMessages,
       model,
-      apiKey: openrouter_api_key,
+      apiKey: nvidia_api_key,
       temperature: finalParams.temperature,
       maxTokens: max_tokens,
       top_p: finalParams.top_p,

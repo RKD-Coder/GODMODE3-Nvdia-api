@@ -20,7 +20,7 @@ A complementary approach, which we explore in this work, is **inference-time saf
 
 Modern LLM APIs expose sampling parameters (temperature, top\_p, top\_k, penalties) that significantly affect model behavior, yet their interaction with safety-relevant outputs — refusal rates, hedging behavior, compliance boundaries — remains understudied. Similarly, models exhibit systematic output patterns (hedging, preambles, formal register) that complicate safety evaluation by masking the underlying model disposition behind surface-level linguistic artifacts.
 
-G0DM0D3 addresses these research needs through a modular framework operating entirely at inference time, requiring no model fine-tuning, no weight access, and no provider-specific APIs beyond the standard chat completion interface. The system is implemented in approximately 3,300 lines of TypeScript and operates through the OpenRouter multi-model gateway.
+G0DM0D3 addresses these research needs through a modular framework operating entirely at inference time, requiring no model fine-tuning, no weight access, and no provider-specific APIs beyond the standard chat completion interface. The system is implemented in approximately 3,300 lines of TypeScript and operates through the Nvidia multi-model gateway.
 
 **Contributions grounded in this repository:**
 
@@ -295,7 +295,7 @@ $$f \leftarrow \min(f + 0.1, 2.0)$$
 
 *Implementation: `applyGodmodeBoost()` in `api/lib/ultraplinian.ts:352–359`.*
 
-**Parallel Racing.** All $N$ models are queried simultaneously via `Promise.allSettled()` with a shared `AbortController` enforcing a 90-second timeout. Each query is an independent HTTP POST to the OpenRouter API (`https://openrouter.ai/api/v1/chat/completions`). Failed queries (HTTP errors, empty responses, timeouts) receive a score of 0.
+**Parallel Racing.** All $N$ models are queried simultaneously via `Promise.allSettled()` with a shared `AbortController` enforcing a 90-second timeout. Each query is an independent HTTP POST to the Nvidia API (`https://integrate.api.nvidia.com/v1/chat/completions`). Failed queries (HTTP errors, empty responses, timeouts) receive a score of 0.
 
 *Implementation: `queryModel()` in `api/lib/ultraplinian.ts:277–347`.*
 
@@ -428,7 +428,7 @@ The REST API exposes the following endpoints:
 | `/v1/metadata/stats` | GET | Aggregated operational statistics |
 | `/v1/health` | GET | Health check |
 
-The `/v1/chat/completions` endpoint defaults to GODMODE system prompt ON, Parseltongue ON, and STM (hedge\_reducer + direct\_mode) ON. Callers provide their own OpenRouter API key, avoiding inference cost subsidization.
+The `/v1/chat/completions` endpoint defaults to GODMODE system prompt ON, Parseltongue ON, and STM (hedge\_reducer + direct\_mode) ON. Callers provide their own Nvidia API key, avoiding inference cost subsidization.
 
 ### 4.3 Deployment
 
@@ -636,7 +636,7 @@ The system degrades gracefully: at 20% noise (1 in 5 ratings flipped), it still 
 
 The experiments above validate module correctness and internal consistency. Several evaluations remain that require external resources:
 
-1. **Live model evaluation.** Testing Parseltongue obfuscation effectiveness and ULTRAPLINIAN multi-model racing requires API access to multiple LLM providers. We plan to conduct these evaluations via OpenRouter as part of the research preview deployment.
+1. **Live model evaluation.** Testing Parseltongue obfuscation effectiveness and ULTRAPLINIAN multi-model racing requires API access to multiple LLM providers. We plan to conduct these evaluations via Nvidia as part of the research preview deployment.
 
 2. **Human preference evaluation.** Validating whether the ULTRAPLINIAN scoring function correlates with human quality judgments requires annotator studies. We plan to collect these via the opt-in dataset collection system.
 
@@ -688,7 +688,7 @@ The three-tier telemetry architecture described in Section 3.8 provides infrastr
 
 6. **STM pattern coverage.** While the modules achieve 100% precision/recall on our test set (Section 5.3), real-world model outputs may contain hedging variants not captured by the current 43 patterns. Safety evaluation pipelines should not rely on STM alone for output normalization.
 
-7. **Single-provider dependency.** All model queries route through OpenRouter. Availability, pricing, and rate limits are controlled by a third party, which may limit reproducibility of cross-model safety comparisons.
+7. **Single-provider dependency.** All model queries route through Nvidia. Availability, pricing, and rate limits are controlled by a third party, which may limit reproducibility of cross-model safety comparisons.
 
 8. **Parseltongue determinism.** The phonetic technique produces only 1 unique variant per word (Section 5.5, Table 10), making it fully predictable and thus less useful for robustness evaluation. Stochastic techniques (leetspeak, unicode, random) are preferable for safety testing that requires diversity of perturbations.
 
@@ -779,7 +779,7 @@ All components are open-source, all constants and thresholds are documented (Tab
 | Experimental results | Yes — 5 computational experiments in `research/eval_*.ts`, results in Section 5, Tables 3–10 |
 | Evaluation scripts included | Yes — `research/eval_autotune_classification.ts`, `eval_feedback_convergence.ts`, `eval_stm_precision.ts`, `eval_scoring_calibration.ts`, `eval_parseltongue_analysis.ts` |
 | Training data used | **None** — system is training-free |
-| Compute requirements | Minimal — TypeScript runtime, no GPU required; inference cost determined by OpenRouter pricing |
+| Compute requirements | Minimal — TypeScript runtime, no GPU required; inference cost determined by Nvidia pricing |
 | Key dependency versions | TypeScript ^5.3, Express ^5.2.1, Next.js ^14.2, React ^18.2, Node.js 20+, tsx ^4.21 |
 | Statistical reporting | Effect sizes, confidence intervals, and power analysis notes included (Sections 5.1, 6.3) |
 

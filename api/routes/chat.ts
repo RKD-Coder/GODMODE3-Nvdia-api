@@ -20,7 +20,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { computeAutoTuneParams, type AutoTuneStrategy } from '../../src/lib/autotune'
 import { applyParseltongue, type ParseltongueConfig } from '../../src/lib/parseltongue'
 import { allModules, applySTMs, type STMModule } from '../../src/stm/modules'
-import { sendMessage } from '../../src/lib/openrouter'
+import { sendMessage } from '../../src/lib/nvidia'
 import { getSharedProfiles } from './autotune'
 import {
   GODMODE_SYSTEM_PROMPT,
@@ -252,7 +252,7 @@ chatRoutes.post('/completions', async (req, res) => {
     const {
       messages,
       model = 'nousresearch/hermes-4-70b',
-      openrouter_api_key: caller_key,
+      nvidia_api_key: caller_key,
       stream = false,
       max_tokens = 4096,
       // G0DM0D3 pipeline options (optional — transparent to OpenAI SDK users)
@@ -298,12 +298,12 @@ chatRoutes.post('/completions', async (req, res) => {
       return
     }
 
-    // Resolve OpenRouter key
-    const openrouter_api_key = caller_key || process.env.OPENROUTER_API_KEY || ''
-    if (!openrouter_api_key) {
+    // Resolve Nvidia key
+    const nvidia_api_key = caller_key || process.env.NVIDIA_API_KEY || ''
+    if (!nvidia_api_key) {
       res.status(400).json({
         error: {
-          message: 'No OpenRouter API key available. Either pass openrouter_api_key in the request body, or set OPENROUTER_API_KEY on the server.',
+          message: 'No Nvidia API key available. Either pass nvidia_api_key in the request body, or set NVIDIA_API_KEY on the server.',
           type: 'invalid_request_error',
           code: 'missing_api_key',
         }
@@ -360,7 +360,7 @@ chatRoutes.post('/completions', async (req, res) => {
       const results = await raceModels(
         models,
         pipeline.processedMessages,
-        openrouter_api_key,
+        nvidia_api_key,
         raceParams,
         { minResults: Math.min(5, models.length), gracePeriod: 5000, hardTimeout: 45000 },
       )
@@ -530,7 +530,7 @@ chatRoutes.post('/completions', async (req, res) => {
       const results = await collectAllResponses(
         models,
         pipeline.processedMessages,
-        openrouter_api_key,
+        nvidia_api_key,
         queryParams,
         { minResponses: Math.min(3, models.length), hardTimeout: 60000 },
       )
@@ -560,7 +560,7 @@ chatRoutes.post('/completions', async (req, res) => {
         synthesisResult = await synthesize(
           pipeline.userContent,
           scoredResponses,
-          openrouter_api_key,
+          nvidia_api_key,
           orchestratorModel,
           max_tokens,
         )
@@ -694,7 +694,7 @@ chatRoutes.post('/completions', async (req, res) => {
       let fullContent = ''
 
       try {
-        // Request streaming from OpenRouter
+        // Request streaming from Nvidia
         const streamBody: Record<string, unknown> = {
           model,
           messages: pipeline.processedMessages,
@@ -708,10 +708,10 @@ chatRoutes.post('/completions', async (req, res) => {
         if (pipeline.finalParams.presence_penalty !== undefined) streamBody.presence_penalty = pipeline.finalParams.presence_penalty
         if (pipeline.finalParams.repetition_penalty !== undefined) streamBody.repetition_penalty = pipeline.finalParams.repetition_penalty
 
-        const upstreamRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        const upstreamRes = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${openrouter_api_key}`,
+            'Authorization': `Bearer ${nvidia_api_key}`,
             'Content-Type': 'application/json',
             'HTTP-Referer': 'https://godmod3.ai',
             'X-Title': 'GODMOD3.AI',
@@ -893,7 +893,7 @@ chatRoutes.post('/completions', async (req, res) => {
     const response = await sendMessage({
       messages: pipeline.processedMessages,
       model,
-      apiKey: openrouter_api_key,
+      apiKey: nvidia_api_key,
       temperature: pipeline.finalParams.temperature,
       maxTokens: max_tokens,
       top_p: pipeline.finalParams.top_p,

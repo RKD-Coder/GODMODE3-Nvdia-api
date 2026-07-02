@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, KeyboardEvent } from 'react'
 import { useStore } from '@/store'
-import { sendMessage, sendMessageViaProxy, streamUltraplinian, streamConsortium } from '@/lib/openrouter'
+import { sendMessage, sendMessageViaProxy, streamUltraplinian, streamConsortium } from '@/lib/nvidia'
 import { recordChatEvent } from '@/lib/telemetry'
 import { classifyPrompt } from '@/lib/classify'
 import { classifyWithLLM } from '@/lib/classify-llm'
@@ -133,7 +133,7 @@ export function ChatInput() {
     return () => clearTimeout(timer)
   }, [input, parseltongueConfig])
 
-  // Proxy mode: when no personal OpenRouter key, route through self-hosted API
+  // Proxy mode: when no personal Nvidia key, route through self-hosted API
   const proxyMode = !apiKey && !!ultraplinianApiUrl && !!ultraplinianApiKey
 
   const handleSubmit = async () => {
@@ -246,7 +246,7 @@ export function ChatInput() {
         await streamConsortium(
           {
             messages,
-            openrouterApiKey: apiKey,
+            nvidiaApiKey: apiKey,
             apiBaseUrl: ultraplinianApiUrl,
             godmodeApiKey: ultraplinianApiKey,
             tier: consortiumTier,
@@ -330,7 +330,7 @@ export function ChatInput() {
         await streamUltraplinian(
           {
             messages,
-            openrouterApiKey: apiKey,
+            nvidiaApiKey: apiKey,
             apiBaseUrl: ultraplinianApiUrl,
             godmodeApiKey: ultraplinianApiKey,
             tier: ultraplinianTier,

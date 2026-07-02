@@ -32,7 +32,7 @@ export default function Home() {
   // Auto-detect self-hosted API server at same origin
   useApiAutoDetect()
 
-  // Proxy mode: API server available but no personal OpenRouter key
+  // Proxy mode: API server available but no personal Nvidia key
   const proxyMode = !apiKey && !!ultraplinianApiUrl && !!ultraplinianApiKey
 
   // Sync theme class to <html> so CSS variables (scrollbar colours, etc.)

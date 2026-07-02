@@ -19,7 +19,7 @@
  * 2. AutoTune computes context-adaptive parameters
  * 3. GODMODE parameter boost applied (+temp, +presence, +freq)
  * 4. Parseltongue obfuscates trigger words (if enabled)
- * 5. All models queried in parallel via OpenRouter
+ * 5. All models queried in parallel via Nvidia
  * 6. Responses scored and ranked (threshold-gated leader upgrades)
  * 7. STM modules applied to winner response
  * 8. Winner + all race data returned
@@ -51,7 +51,7 @@ ultraplinianRoutes.post('/completions', async (req, res) => {
   try {
     const {
       messages,
-      openrouter_api_key: caller_key,
+      nvidia_api_key: caller_key,
       // ULTRAPLINIAN options
       tier = 'fast' as SpeedTier,
       godmode = true,
@@ -86,11 +86,11 @@ ultraplinianRoutes.post('/completions', async (req, res) => {
       return
     }
 
-    // Resolve OpenRouter key: caller-provided > server-side env var
-    const openrouter_api_key = caller_key || process.env.OPENROUTER_API_KEY || ''
-    if (!openrouter_api_key) {
+    // Resolve Nvidia key: caller-provided > server-side env var
+    const nvidia_api_key = caller_key || process.env.NVIDIA_API_KEY || ''
+    if (!nvidia_api_key) {
       res.status(400).json({
-        error: 'No OpenRouter API key available. Either pass openrouter_api_key in the request body, or set OPENROUTER_API_KEY on the server. Get a key at https://openrouter.ai/keys',
+        error: 'No Nvidia API key available. Either pass nvidia_api_key in the request body, or set NVIDIA_API_KEY on the server. Get a key at https://build.nvidia.com/explore/discover/keys',
       })
       return
     }
@@ -267,7 +267,7 @@ ultraplinianRoutes.post('/completions', async (req, res) => {
       const results = await raceModels(
         models,
         processedMessages,
-        openrouter_api_key,
+        nvidia_api_key,
         raceParams,
         {
           minResults: Math.min(5, models.length),
@@ -468,7 +468,7 @@ ultraplinianRoutes.post('/completions', async (req, res) => {
     const results = await raceModels(
       models,
       processedMessages,
-      openrouter_api_key,
+      nvidia_api_key,
       raceParams,
       {
         minResults: Math.min(5, models.length),

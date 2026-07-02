@@ -351,7 +351,7 @@ export const useStore = create<AppState>()(
       // Initial state
       theme: 'matrix',
       apiKey: '',
-      defaultModel: 'nvidia/nemotron-4-340b-instruct',
+      defaultModel: 'deepseek-ai/deepseek-v4-pro',
       conversations: [],
       currentConversationId: null,
       isHydrated: false,

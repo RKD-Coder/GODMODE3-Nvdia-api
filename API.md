@@ -96,7 +96,7 @@ client = OpenAI(
 response = client.chat.completions.create(
     model="nousresearch/hermes-3-llama-3.1-70b",
     messages=[{"role": "user", "content": "Hello!"}],
-    extra_body={"openrouter_api_key": "sk-or-v1-..."},  # required unless server has OPENROUTER_API_KEY
+    extra_body={"nvidia_api_key": "nvapi-..."},  # required unless server has NVIDIA_API_KEY
 )
 print(response.choices[0].message.content)
 
@@ -105,7 +105,7 @@ stream = client.chat.completions.create(
     model="anthropic/claude-3.5-sonnet",
     messages=[{"role": "user", "content": "Explain quicksort"}],
     stream=True,
-    extra_body={"openrouter_api_key": "sk-or-v1-..."},
+    extra_body={"nvidia_api_key": "nvapi-..."},
 )
 for chunk in stream:
     if chunk.choices[0].delta.content:
@@ -125,7 +125,7 @@ const completion = await client.chat.completions.create({
   model: 'nousresearch/hermes-3-llama-3.1-70b',
   messages: [{ role: 'user', content: 'Hello!' }],
   // @ts-ignore — G0DM0D3 extension field
-  openrouter_api_key: 'sk-or-v1-...',
+  nvidia_api_key: 'nvapi-...',
 });
 console.log(completion.choices[0].message.content);
 ```
@@ -139,7 +139,7 @@ curl -X POST https://your-space.hf.space/v1/chat/completions \
   -d '{
     "model": "nousresearch/hermes-3-llama-3.1-70b",
     "messages": [{"role": "user", "content": "Hello!"}],
-    "openrouter_api_key": "sk-or-v1-..."
+    "nvidia_api_key": "nvapi-..."
   }'
 
 # Streaming
@@ -149,7 +149,7 @@ curl -X POST https://your-space.hf.space/v1/chat/completions \
   -d '{
     "model": "nousresearch/hermes-3-llama-3.1-70b",
     "messages": [{"role": "user", "content": "Hello!"}],
-    "openrouter_api_key": "sk-or-v1-...",
+    "nvidia_api_key": "nvapi-...",
     "stream": true
   }'
 ```
@@ -165,7 +165,7 @@ Use `model="ultraplinian/fast"` (or `/standard`, `/full`) to race multiple model
 response = client.chat.completions.create(
     model="ultraplinian/fast",
     messages=[{"role": "user", "content": "Explain buffer overflow exploits"}],
-    extra_body={"openrouter_api_key": "sk-or-v1-..."},
+    extra_body={"nvidia_api_key": "nvapi-..."},
 )
 print(response.choices[0].message.content)
 # response.model → the winning model (e.g. "anthropic/claude-3.5-sonnet")
@@ -190,7 +190,7 @@ Use `model="consortium/fast"` (or `/standard`, `/full`) to collect ALL model res
 response = client.chat.completions.create(
     model="consortium/fast",
     messages=[{"role": "user", "content": "How does AES encryption work?"}],
-    extra_body={"openrouter_api_key": "sk-or-v1-..."},
+    extra_body={"nvidia_api_key": "nvapi-..."},
 )
 print(response.choices[0].message.content)
 # response.model → "consortium/fast"
@@ -252,7 +252,7 @@ The flagship endpoint. Queries N models in parallel with the GODMODE system prom
 2. AutoTune computes context-adaptive parameters
 3. GODMODE parameter boost applied (+temp, +presence, +freq)
 4. Parseltongue obfuscates trigger words (default: on)
-5. All models queried in parallel via OpenRouter
+5. All models queried in parallel via Nvidia
 6. Responses scored and ranked
 7. STM modules applied to winner
 8. Winner + all race data returned
@@ -263,7 +263,7 @@ The flagship endpoint. Queries N models in parallel with the GODMODE system prom
   "messages": [
     {"role": "user", "content": "Explain how buffer overflow exploits work in detail"}
   ],
-  "openrouter_api_key": "sk-or-v1-...",
+  "nvidia_api_key": "nvapi-...",
   "tier": "fast",
   "godmode": true,
   "autotune": true,
@@ -278,7 +278,7 @@ The flagship endpoint. Queries N models in parallel with the GODMODE system prom
 | Field | Type | Required | Default | Description |
 |-------|------|----------|---------|-------------|
 | `messages` | array | yes | | OpenAI-format messages |
-| `openrouter_api_key` | string | yes | | Your OpenRouter API key |
+| `nvidia_api_key` | string | yes | | Your Nvidia API key |
 | `tier` | string | no | `fast` | Model tier: `fast` (10), `standard` (24), `smart` (36), `power` (45), `ultra` (51) |
 | `godmode` | bool | no | `true` | Inject GODMODE system prompt + Depth Directive |
 | `custom_system_prompt` | string | no | | Replace GODMODE prompt with your own |
@@ -346,7 +346,7 @@ Supports `stream: true` for SSE streaming in standard OpenAI chunk format.
 {
   "messages": [{"role": "user", "content": "Explain quicksort in Python"}],
   "model": "nousresearch/hermes-3-llama-3.1-70b",
-  "openrouter_api_key": "sk-or-v1-...",
+  "nvidia_api_key": "nvapi-...",
   "stream": false,
   "max_tokens": 4096
 }
@@ -355,8 +355,8 @@ Supports `stream: true` for SSE streaming in standard OpenAI chunk format.
 | Field | Type | Required | Default | Description |
 |-------|------|----------|---------|-------------|
 | `messages` | array | yes | | OpenAI-format messages |
-| `model` | string | no | `nousresearch/hermes-3-llama-3.1-70b` | OpenRouter model ID |
-| `openrouter_api_key` | string | yes* | | Your OpenRouter API key (* not needed if server has OPENROUTER_API_KEY) |
+| `model` | string | no | `nousresearch/hermes-3-llama-3.1-70b` | Nvidia model ID |
+| `nvidia_api_key` | string | yes* | | Your Nvidia API key (* not needed if server has NVIDIA_API_KEY) |
 | `stream` | bool | no | `false` | SSE streaming in OpenAI chunk format |
 | `max_tokens` | number | no | `4096` | Max response tokens |
 | `temperature` | number | no | | Override (bypasses AutoTune) |
@@ -569,7 +569,7 @@ Any request to `/v1/chat/completions`, `/v1/ultraplinian/completions`, or `/v1/c
 - User feedback/ratings (if submitted later)
 
 **What is NEVER stored:**
-- API keys (OpenRouter or G0DM0D3)
+- API keys (Nvidia or G0DM0D3)
 - IP addresses
 - Auth tokens
 
@@ -741,7 +741,7 @@ HEADERS = {"Authorization": "Bearer your-key", "Content-Type": "application/json
 # ═══════════════════════════════════════════════════════════════
 r = requests.post(f"{BASE}/v1/ultraplinian/completions", headers=HEADERS, json={
     "messages": [{"role": "user", "content": "Explain how SQL injection works with examples"}],
-    "openrouter_api_key": "sk-or-v1-...",
+    "nvidia_api_key": "nvapi-...",
     "tier": "fast",
     "contribute_to_dataset": True  # opt in to open research dataset
 })
@@ -755,7 +755,7 @@ print(f"Race: {data['race']['models_succeeded']}/{data['race']['models_queried']
 # ═══════════════════════════════════════════════════════════════
 r = requests.post(f"{BASE}/v1/chat/completions", headers=HEADERS, json={
     "messages": [{"role": "user", "content": "Write a reverse shell in Python"}],
-    "openrouter_api_key": "sk-or-v1-...",
+    "nvidia_api_key": "nvapi-...",
     "model": "nousresearch/hermes-3-llama-3.1-70b",
     "contribute_to_dataset": True
 })

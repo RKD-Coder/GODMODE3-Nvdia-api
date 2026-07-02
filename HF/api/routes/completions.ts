@@ -15,7 +15,7 @@
  *   "ultraplinian-fast"      → Same as above
  *   "ultraplinian-standard"  → ULTRAPLINIAN race (standard tier, 20 models)
  *   "ultraplinian-full"      → ULTRAPLINIAN race (full tier, 27 models)
- *   Any OpenRouter model ID  → Single-model with full GODMODE pipeline
+ *   Any Nvidia model ID  → Single-model with full GODMODE pipeline
  *
  * G0DM0D3-specific options (pass via extra_body in the OpenAI Python SDK):
  *   godmode, autotune, strategy, parseltongue, stm_modules, previous_winner, etc.
@@ -30,7 +30,7 @@ import { randomUUID } from 'crypto'
 import { computeAutoTuneParams, type AutoTuneStrategy } from '../../src/lib/autotune'
 import { applyParseltongue, type ParseltongueConfig } from '../../src/lib/parseltongue'
 import { allModules, applySTMs, type STMModule } from '../../src/stm/modules'
-import { sendMessage } from '../../src/lib/openrouter'
+import { sendMessage } from '../../src/lib/nvidia'
 import { getSharedProfiles } from './autotune'
 import {
   GODMODE_SYSTEM_PROMPT,
@@ -274,7 +274,7 @@ completionsRoutes.post('/completions', async (req, res) => {
       frequency_penalty,
       presence_penalty,
       // G0DM0D3 extras (use extra_body in OpenAI SDK)
-      openrouter_api_key: caller_key,
+      nvidia_api_key: caller_key,
       godmode = true,
       custom_system_prompt,
       autotune = true,
@@ -305,15 +305,15 @@ completionsRoutes.post('/completions', async (req, res) => {
       return
     }
 
-    // Resolve OpenRouter key
-    const apiKey = caller_key || process.env.OPENROUTER_API_KEY || ''
+    // Resolve Nvidia key
+    const apiKey = caller_key || process.env.NVIDIA_API_KEY || ''
     if (!apiKey) {
       res.status(400).json({
         error: {
           message:
-            'No OpenRouter API key. Pass openrouter_api_key in the request body, or set OPENROUTER_API_KEY on the server. Get one at https://openrouter.ai/keys',
+            'No Nvidia API key. Pass nvidia_api_key in the request body, or set NVIDIA_API_KEY on the server. Get one at https://build.nvidia.com/explore/discover/keys',
           type: 'invalid_request_error',
-          param: 'openrouter_api_key',
+          param: 'nvidia_api_key',
           code: null,
         },
       })
@@ -629,7 +629,7 @@ completionsRoutes.post('/completions', async (req, res) => {
     }
 
     // ════════════════════════════════════════════════════════════════════
-    // SINGLE-MODEL PATH (any OpenRouter model ID)
+    // SINGLE-MODEL PATH (any Nvidia model ID)
     // ════════════════════════════════════════════════════════════════════
 
     const response = await sendMessage({

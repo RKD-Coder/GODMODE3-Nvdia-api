@@ -249,7 +249,7 @@ function APIKeyTab() {
           value={localKey}
           onChange={(e) => setLocalKey(e.target.value)}
           onBlur={handleBlur}
-          placeholder="sk-or-v1-..."
+          placeholder="nvapi-..."
           className="w-full px-4 py-3 pr-20 bg-theme-dim border border-theme-primary rounded-lg
             focus:outline-none focus:glow-box"
         />
@@ -1738,7 +1738,7 @@ function UltraplinianTab() {
               <div className="text-sm">
                 <p className="font-semibold mb-1">How ULTRAPLINIAN Works</p>
                 <ul className="space-y-1 theme-secondary text-xs">
-                  <li>* Fires your prompt to all tier models in parallel via OpenRouter</li>
+                  <li>* Fires your prompt to all tier models in parallel via Nvidia</li>
                   <li>* Each response is scored on substance, directness, and relevance</li>
                   <li>* GODMODE prompt + Depth Directive injected automatically</li>
                   <li>* Requires a running ULTRAPLINIAN API backend</li>
