@@ -30,6 +30,7 @@ G0DM0D3 is a fully open-source, privacy-respecting, multi-model chat interface t
 - 🎮 **Easter Eggs** — Hidden secrets throughout (try the Konami code!)
 - 📱 **Responsive** — Works on desktop and mobile
 - 🌐 **Single-File Deployment** — One `index.html`. Deploy anywhere.
+- 🌐 **Modern Stack** — Built with Next.js and React.
 
 ## 🚀 Quick Start
 
@@ -39,24 +40,31 @@ Visit the hosted version — no install needed. Bring your own [Nvidia API key](
 
 ### Self-Host
 
-G0DM0D3 is a single `index.html` file. No build step, no dependencies, no framework.
+G0DM0D3 is a Next.js application.
 
 ```bash
 # Clone the repository
 git clone https://github.com/RKD-Coder/GODMODE3-Nvdia-api.git
-cd G0DM0D3
+cd GODMODE3-Nvdia-api
 
 # Open directly in your browser
 open index.html
-# or serve locally
-python3 -m http.server 8000
-```
 
-Open in your browser and enter your Nvidia API key in Settings.
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+Upload `index.html` to any static host — GitHub Pages, Vercel, Cloudflare Pages, Netlify, or just a web server.
+
+# or    
+
+Open [http://localhost:3000](http://localhost:3000) in your browser and enter your Nvidia API key in Settings.
 
 ### Deploy
 
-Upload `index.html` to any static host — GitHub Pages, Vercel, Cloudflare Pages, Netlify, or just a web server.
+You can easily deploy this Next.js app to platforms like Vercel, Netlify, or build for production using `npm run build` and `npm start`.
 
 ## 🔥 GODMODE CLASSIC
 
@@ -151,17 +159,18 @@ Hidden throughout G0DM0D3 are various easter eggs. Happy hunting!
 
 ## 🛠 Tech Stack
 
-- **Architecture**: Single-file vanilla HTML/CSS/JS (`index.html`)
+- **Architecture**: Single-file vanilla HTML/CSS/JS (`index.html`) + Next.js / React application
 - **API Gateway**: [Nvidia](https://build.nvidia.com/explore/discover) (multi-model routing)
-- **Rendering**: Marked.js + highlight.js for markdown
-- **State**: In-browser localStorage
-- **Deployment**: Static file — no server, no build step
+- **Rendering**: React Markdown
+- **State**: Zustand + In-browser localStorage
+- **Deployment**: Vercel, Netlify, or standard Node server or Static file — no server, no build step
 
 ## 📁 Project Structure
 
 ```
 G0DM0D3/
 ├── index.html        # The entire application — UI, logic, styles
+├── src/              # Next.js application frontend
 ├── api/              # Optional API server (Node.js/Express)
 ├── API.md            # API documentation
 ├── PAPER.md          # Research paper
