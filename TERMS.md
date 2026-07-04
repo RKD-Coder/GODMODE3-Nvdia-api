@@ -2,6 +2,10 @@
 
 **Last updated:** 2026-02-17
 
+## Credits
+- **Maintained By:** RKD-Coder (Current repository and Nvidia API integration)
+- **Original Architecture & OpenRouter API:** elder-plinius
+
 ---
 
 ## 1. Acceptance

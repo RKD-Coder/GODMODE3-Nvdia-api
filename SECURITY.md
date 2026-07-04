@@ -46,3 +46,8 @@ Out of scope:
 - **Headers:** HSTS, CSP, X-Content-Type-Options, X-Frame-Options, Permissions-Policy
 - **Docker:** Non-root containers, minimal base images
 - **Data:** Zero PII storage, opt-in dataset collection only
+
+## Credits
+
+- **Maintained By:** RKD-Coder (Current repository and Nvidia API integration)
+- **Original Architecture & OpenRouter API:** elder-plinius

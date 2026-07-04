@@ -1,5 +1,9 @@
 # G0DM0D3 Research Preview API
 
+> **Credits:**
+> - **Maintained By:** RKD-Coder (Current repository and Nvidia API integration)
+> - **Original Architecture & OpenRouter API:** elder-plinius
+
 REST API exposing the **ULTRAPLINIAN** multi-model racing engine and core G0DM0D3 systems: **AutoTune** (context-adaptive LLM parameter tuning), **Parseltongue** (text obfuscation), **STM** (semantic text transformation), **Feedback Loop** (EMA-based parameter learning), and **opt-in open dataset collection**.
 
 ## Quick Start

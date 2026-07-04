@@ -2,6 +2,10 @@
 
 **Anonymous Authors**
 
+> **Credits:**
+> - **Maintained By:** RKD-Coder (Current repository and Nvidia API integration)
+> - **Original Architecture & OpenRouter API:** elder-plinius
+
 ---
 
 ## Abstract
